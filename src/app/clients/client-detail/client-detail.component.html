@@ -1,0 +1,33 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    Client #{{client?.id}}
+  </div>
+  <div class="panel-body">
+
+    <div class="has-error" *ngIf="errorMessage">{{errorMessage}}</div>
+
+    <div class="text-center" *ngIf="!client && !errorMessage">Loading client...</div>
+
+    <div *ngIf="client">
+      <h4>{{client?.name}}</h4>
+      <p>{{client?.gender}}</p>
+      <p>{{client?.email}}</p>
+      <p>{{client?.phone}}</p>
+      <p>{{client?.accountId}}</p>
+      <p>{{client?.additionalInfo}}</p>
+      <p>{{client?.additionalPhone}}</p>
+      <p>{{client?.address}}</p>
+      <p>{{client?.mapedBirthDay | date:'MM/dd/yyyy'}}</p>
+      <p>{{client?.contactPerson}}</p>
+      <p>{{client?.description}}</p>
+
+      <a class="btn btn-primary pull-right" [routerLink]="['/clients', client.id, 'edit']">
+        Edit
+      </a>
+    </div>
+
+  </div>
+
+</div>
+
+<a class="btn btn-default" [routerLink]="['/clients']">Back</a>

@@ -1,0 +1,114 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    {{client ? 'Edit client' : 'New client'}}
+  </div>
+  <div class="panel-body">
+
+    <form [formGroup]="editClientForm" (ngSubmit)="onSubmit(editClientForm.value)" class="form-horizontal" novalidate>
+      <fieldset>
+
+        <div class="form-group" [ngClass]="{'has-error': (editClientForm.get('name').touched || editClientForm.get('name').dirty) && !editClientForm.get('name').valid }">
+          <label class="col-md-2 control-label" for="clientNameId">Name</label>
+          <div class="col-md-8">
+            <input formControlName="name" class="form-control" id="clientNameId" type="text" placeholder="Name (required)" />
+            <span class="help-block" *ngIf="(editClientForm.get('name').touched || editClientForm.get('name').dirty) && editClientForm.get('name').errors">
+              <span *ngIf="editClientForm.get('name').hasError('required')">
+                Client name is required.
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{'has-error': (editClientForm.get('gender').touched || editClientForm.get('gender').dirty) && !editClientForm.get('gender').valid }">
+          <label class="col-md-2 control-label">Gender</label>
+          <div class="col-md-8">
+            <label class="radio-inline">
+              <input type="radio" formControlName="gender" value="male"> Male
+            </label>
+            <label class="radio-inline">
+              <input type="radio" formControlName="gender" value="female"> Female
+            </label>
+            <span class="help-block" *ngIf="(editClientForm.get('gender').touched || editClientForm.get('gender').dirty) && editClientForm.get('gender').errors">
+              <span *ngIf="editClientForm.get('gender').hasError('required')">
+                Client gender is required.
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{'has-error': (editClientForm.get('date').touched || editClientForm.get('date').dirty) && !editClientForm.get('date').valid }">
+          <label class="col-md-2 control-label" for="clientBirthDayId">Birthday</label>
+          <div class="col-md-8">
+            <input formControlName="date" class="form-control" id="clientBirthDayId" type="date" />
+            <span class="help-block" *ngIf="(editClientForm.get('date').touched || editClientForm.get('date').dirty) && editClientForm.get('date').errors">
+              <span *ngIf="editClientForm.get('date').hasError('required')">
+                Client birthday is required.
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{'has-error': (editClientForm.get('phone').touched || editClientForm.get('phone').dirty) && !editClientForm.get('phone').valid }">
+          <label class="col-md-2 control-label" for="clientPhoneDayId">Phone</label>
+          <div class="col-md-8">
+            <input formControlName="phone" class="form-control" id="clientPhoneDayId" type="tel" placeholder="Phone (required)" />
+            <span class="help-block" *ngIf="(editClientForm.get('phone').touched || editClientForm.get('phone').dirty) && editClientForm.get('phone').errors">
+              <span *ngIf="editClientForm.get('phone').hasError('required')">
+                Client phone is required.
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{'has-error': (editClientForm.get('email').touched || editClientForm.get('email').dirty) && !editClientForm.get('email').valid }">
+          <label class="col-md-2 control-label" for="clientEmailDayId">Email</label>
+          <div class="col-md-8">
+            <input formControlName="email" class="form-control" id="clientEmailDayId" type="email" placeholder="Email (required)" />
+            <span class="help-block" *ngIf="(editClientForm.get('email').touched || editClientForm.get('email').dirty) && editClientForm.get('email').errors">
+              <span *ngIf="editClientForm.get('email').hasError('required')">
+                Client email is required.
+              </span>
+              <span *ngIf="editClientForm.get('email').hasError('email')">
+                Valid email is required.
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{'has-error': (editClientForm.get('address').touched || editClientForm.get('address').dirty) && !editClientForm.get('address').valid }">
+          <label class="col-md-2 control-label" for="clientAddressId">Address</label>
+          <div class="col-md-8">
+            <input formControlName="address" class="form-control" id="clientAddressId" type="text" placeholder="Address (required)" />
+            <span class="help-block" *ngIf="(editClientForm.get('address').touched || editClientForm.get('address').dirty) && editClientForm.get('address').errors">
+              <span *ngIf="editClientForm.get('address').hasError('required')">
+                Client address is required.
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{'has-error': (editClientForm.get('description').touched || editClientForm.get('description').dirty) && !editClientForm.get('description').valid }">
+          <label class="col-md-2 control-label" for="clientDescriptionId">Description</label>
+          <div class="col-md-8">
+            <textarea formControlName="description" class="form-control" id="clientDescriptionId" rows="5" placeholder="Description (required)"></textarea>
+            <span class="help-block" *ngIf="(editClientForm.get('description').touched || editClientForm.get('description').dirty) && editClientForm.get('description').errors">
+              <span *ngIf="editClientForm.get('description').hasError('required')">
+                Client description is required.
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-md-6 col-md-offset-2">
+            <button class="btn btn-primary" type="submit" [disabled]="!editClientForm.valid">Save</button>
+            <button class="btn btn-default" type="button" (click)="cancel()">Cancel</button>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+
+    <div class="has-error" *ngIf="errorMessage">{{errorMessage}}</div>
+
+  </div>
+</div>

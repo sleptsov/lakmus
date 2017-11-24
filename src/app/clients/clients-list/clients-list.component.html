@@ -1,0 +1,51 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    All clients
+  </div>
+  <div class="panel-body">
+
+    <div class="has-error" *ngIf="errorMessage">{{errorMessage}}</div>
+
+    <div class="text-center" *ngIf="clients.length === 0 && !errorMessage">Loading clients...</div>
+
+    <div class="table-responsive" *ngIf="clients && clients.length">
+      <button class="btn btn-sm btn-default" (click)="sort()">Sort</button>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Birthday</th>
+            <th>Address</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let client of clients[currentPage]">
+            <td>
+              <a [routerLink]="['/clients', client.id]">
+                {{client?.name}}
+              </a>
+            </td>
+            <td>{{ client?.phone }}</td>
+            <td>{{ client?.email }}</td>
+            <td>{{ client?.mapedBirthDay | date:'MM/dd/yyyy' }}</td>
+            <td>{{ client?.address }}</td>
+            <td>
+              <a class="btn btn-primary" [routerLink]="['/clients', client.id, 'edit']">
+                Edit
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="row" *ngIf="clients && clients.length">
+  <div class="col-xs-12 text-center">
+    <pagination [boundaryLinks]="true" [itemsPerPage]="itemsPerPage" [totalItems]="totalItems" [(ngModel)]="currentPage" class="pagination-sm"
+      previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+  </div>
+</div>
