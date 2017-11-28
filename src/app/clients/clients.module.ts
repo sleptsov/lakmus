@@ -7,6 +7,7 @@ import { ClientsListComponent } from './clients-list/clients-list.component';
 import { ClientDetailComponent } from './client-detail/client-detail.component';
 import { ClientEditComponent } from './client-edit/client-edit.component';
 import { ClientsService } from './clients.service';
+import { LoaderModule } from '../components/loader/loader.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { ClientsService } from './clients.service';
         component: ClientEditComponent,
       }
     ]),
-    PaginationModule.forRoot()
+    PaginationModule.forRoot(),
+    LoaderModule
   ],
   declarations: [
     ClientsListComponent,

@@ -8,8 +8,19 @@ export class ClientsService {
 
     constructor(private restService: RestService) { }
 
-    loadClients(): Observable<IClient[]> {
-        return this.restService.fetch(`/clients`);
+    // tslint:disable-next-line:max-line-length
+    loadClients(name?: string, phone?: string, birthYearFrom?: number, birthYearTo?: number, _start?: number, _limit?: number): Observable<IClient[]> {
+        let params = ``;
+
+        if (name) { params += `name=${name}&`; }
+        if (phone) { params += `phone=${phone}&`; }
+        if (birthYearFrom) { params += `birthYearFrom=${birthYearFrom}&`; }
+        if (birthYearTo) { params += `birthYearTo=${birthYearTo}&`; }
+        if (_start) { params += `_start=${_start}&`; }
+        if (_limit) { params += `_limit=${_limit}&`; }
+        if (params.length) { params = '?' + params.slice(0, -1); }
+
+        return this.restService.fetch(`/clients${params}`);
     }
 
     loadClient(id: number): Observable<IClient> {

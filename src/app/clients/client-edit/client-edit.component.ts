@@ -99,7 +99,7 @@ export class ClientEditComponent implements OnInit {
 
   cancel(): void {
     this.editClientForm.reset();
-    this.router.navigateByUrl('/clients');
+    this.router.navigate(['/clients'], { queryParamsHandling: 'preserve' });
   }
 
   parseDate(client: IClient): string {

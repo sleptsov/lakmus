@@ -6,7 +6,7 @@
 
     <div class="has-error" *ngIf="errorMessage">{{errorMessage}}</div>
 
-    <div class="text-center" *ngIf="!client && !errorMessage">Loading client...</div>
+    <app-loader [isLoading]="isLoading"></app-loader>
 
     <div *ngIf="client">
       <h4>{{client?.name}}</h4>
@@ -30,4 +30,4 @@
 
 </div>
 
-<a class="btn btn-default" [routerLink]="['/clients']">Back</a>
+<a class="btn btn-default" [routerLink]="['/clients']" queryParamsHandling="preserve">Back</a>

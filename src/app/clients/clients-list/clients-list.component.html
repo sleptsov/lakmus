@@ -4,12 +4,31 @@
   </div>
   <div class="panel-body">
 
-    <div class="has-error" *ngIf="errorMessage">{{errorMessage}}</div>
 
-    <div class="text-center" *ngIf="clients.length === 0 && !errorMessage">Loading clients...</div>
+    <div>
+      <form [formGroup]="searchForm" (ngSubmit)="doSearch(searchForm.value)" class="form-inline" novalidate>
+        <fieldset>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" [(ngModel)]="sortByName" [ngModelOptions]="{standalone: true}" (change)="sortBy($event)" [disabled]="isLoading || errorMessage"> Sort by name
+            </label>
+          </div>
+          <button type="submit" class="btn btn-default pull-right" [disabled]="isLoading">Search</button>
+          <div class="form-group pull-right">
+            <div class="col-md-8">
+              <input formControlName="name" (keyup)="doSearch(searchForm.value)" class="form-control" id="clientSearchByNameId" type="search"
+                placeholder="Type name..." />
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
 
-    <div class="table-responsive" *ngIf="clients && clients.length">
-      <button class="btn btn-sm btn-default" (click)="sort()">Sort</button>
+    <div class="text-center text-danger" *ngIf="errorMessage">{{errorMessage}}</div>
+
+    <app-loader [isLoading]="isLoading"></app-loader>
+
+    <div class="table-responsive" *ngIf="!isLoading && !errorMessage">
       <table class="table">
         <thead>
           <tr>
@@ -21,9 +40,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let client of clients[currentPage]">
+          <tr *ngFor="let client of clients">
             <td>
-              <a [routerLink]="['/clients', client.id]">
+              <a [routerLink]="['/clients', client.id]" [queryParams]="{sortBy: sortType, search: searchData, page: currentPage}">
                 {{client?.name}}
               </a>
             </td>
@@ -32,7 +51,7 @@
             <td>{{ client?.mapedBirthDay | date:'MM/dd/yyyy' }}</td>
             <td>{{ client?.address }}</td>
             <td>
-              <a class="btn btn-primary" [routerLink]="['/clients', client.id, 'edit']">
+              <a class="btn btn-primary" [routerLink]="['/clients', client.id, 'edit']" [queryParams]="{sortBy: sortType, search: searchData, page: currentPage}">
                 Edit
               </a>
             </td>
@@ -43,9 +62,9 @@
   </div>
 </div>
 
-<div class="row" *ngIf="clients && clients.length">
+<div class="row" *ngIf="!errorMessage">
   <div class="col-xs-12 text-center">
-    <pagination [boundaryLinks]="true" [itemsPerPage]="itemsPerPage" [totalItems]="totalItems" [(ngModel)]="currentPage" class="pagination-sm"
-      previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+    <pagination [boundaryLinks]="true" [maxSize]="pagerMaxSize" [itemsPerPage]="itemsPerPage" [totalItems]="totalItems" [(ngModel)]="currentPage"
+      class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" (pageChanged)="pageChanged($event)"></pagination>
   </div>
 </div>

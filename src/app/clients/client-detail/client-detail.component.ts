@@ -12,6 +12,7 @@ export class ClientDetailComponent implements OnInit {
 
   errorMessage: string;
   client: IClient;
+  isLoading: boolean = false;
 
   constructor(
     private clientService: ClientsService,
@@ -24,6 +25,7 @@ export class ClientDetailComponent implements OnInit {
   }
 
   loadClient(id: number): void {
+    this.isLoading = true;
     this.clientService.loadClient(id).subscribe((response: IClient) => {
       this.client = Object.assign({}, response, {
         mapedBirthDay: new Date(response.birthYear, response.birthMonth, response.birthDay)
@@ -32,7 +34,7 @@ export class ClientDetailComponent implements OnInit {
     }, (error) => {
       this.errorMessage = <any>error;
       console.log(error);
-    }, () => { });
+    }, () => { this.isLoading = false; });
   }
 
 }
